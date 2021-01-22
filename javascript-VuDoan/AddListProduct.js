@@ -1,11 +1,10 @@
-
-var prod = new  Product();
+var listData = new Product();
 
 function listProduct(){
     
     for (let index = 0; index < 10; index++) {
-        prod.setInfo((index + 1), randomName.random(10), (index + 1), 1, false );
-        console.log(prod);
+        listData.setInfo((index + 1), randomName.random(10), (index + 1), 1, false);
+        listData.printInfo();
     }
 }
 
