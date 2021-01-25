@@ -30,17 +30,22 @@ const random = (length = 8) => {
     }
 
     return str;
-
 }
 const listPro = [
-    {id: 1, name: 'kiem', categoryId: 2, safeDate: '20-11-2020', quality: 5, isDelete: false},
-    {id: 2, name: 'aaaa', categoryId: 2, safeDate: '23-01-2021', quality: 0, isDelete: false},
-    {id: 3, name: 'cccc', categoryId: 3, safeDate: '02-12-2020', quality: 1, isDelete: true}
+    {id: 1, name: 'kiem', categoryId: 2, saleDate: '20-11-2020', quality: 5, isDelete: false},
+    {id: 2, name: 'aaaa', categoryId: 2, saleDate: '27-01-2021', quality: 0, isDelete: false},
+    {id: 3, name: 'cccc', categoryId: 3, saleDate: '02-12-2020', quality: 1, isDelete: true}
 ]
-var d = new Date()
-var date = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
+const d = new Date()
+const DATE = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
 // var idInput = document.getElementById("textboxid").value;
 var sumQuality = 0
+var listQuality = []
+const getQuality = listProduct => {
+    listProduct.forEach(element => {
+        listQuality.push(element.quality)
+    })
+}
 
 function listProduct(){
     var prod = new  Product();
@@ -51,7 +56,6 @@ function listProduct(){
 }
 
 function fiterProductById(listProduct){
-
     if (id != null) {
         for (let index = 0; index < listProduct.length; index++) {
             if (listProduct[index].id == idInput) {
@@ -62,12 +66,8 @@ function fiterProductById(listProduct){
     } 
 }
 
-var fiterProductByIdWithES6 = (listProduct, idInput)  => { 
-    return listProduct.find((listProduct) => {
-        return listProduct.id === idInput
-    }).name
-} 
-//console.log('Tên cảu Product: ' + fiterProductByIdWithES6(listPro, 2));
+const fiterProductByIdWithES6 = (listProduct, idInput)  => (listProduct.find(listProduct => (listProduct.id === idInput)).name)
+//console.log('Tên của Product: ' + fiterProductByIdWithES6(listPro, 2));
 
 function fiterProductByQulity(listProduct){
     for (let indexProduct = 0; indexProduct < listProduct.length; indexProduct++) {
@@ -77,31 +77,22 @@ function fiterProductByQulity(listProduct){
         }
     }
 }
+//console.log(fiterProductByQulity(listPro));
 
-var fiterProductByQulityWithES6 = listProduct => { 
-    return listProduct.find((listProduct) => {
-        return listProduct.quality > 0
-    })
-}
-console.log(fiterProductByQulityWithES6(listProduct));
+const fiterProductByQulityWithES6 = listProduct => listProduct.find( listProduct => listProduct.quality > 0)
+//console.log(fiterProductByQulityWithES6(listPro));
 
 function fiterProductBySaleDate(listProduct){
     for (let indexProduct = 0; indexProduct < listProduct.length; indexProduct++) {
-        if (listProduct[indexProduct].safeDate >= date) {
+        if (listProduct[indexProduct].saleDate >= DATE) {
             return listProduct[indexProduct]
-            //console.log(listProduct[indexProduct])
         }
     }
 }
+//console.log(fiterProductBySaleDate(listPro));
 
-var fiterProductBySaleDateWithES6 = listProduct => {
-    listProduct.forEach(element => {
-        if (element.safeDate > date){
-            return element
-            //console.log(element)
-        }
-    })
-}
+var fiterProductBySaleDateWithES6 = listProduct => listProduct.find( listProduct => listProduct.saleDate >= DATE)
+//console.log(fiterProductBySaleDateWithES6(listPro));
 
 function totalProduct(listProduct) {
     for (let indexProduct = 0; indexProduct < listProduct.length; indexProduct++) {
@@ -114,16 +105,42 @@ function totalProduct(listProduct) {
     //console.log(sumQuality)
 }
 
-// var totalProductWithES6 = listProduct => {
-//     listProduct.reduce((accumulator, currentValue) => {
-//         accumulator + currentValue
-//     })
-// }
+const totalProductWithES6 = listProduct => {
+    getQuality(listPro)
+    const reducer = (accumulator, currentValue) => accumulator + currentValue
+    return listQuality.reduce(reducer)
+}
+//console.log(totalProductWithES6(listPro)    );
 
-var getQuality = listProduct => {
+function isHaveProductInCategory(listProduct, categoryId) {
+    for (let indexCategory = 0; indexCategory < listProduct.length; indexCategory++) {
+        if (listProduct.categoryId === categoryId) 
+            return true
+        else 
+            return false
+    }
+}
+//console.log(isHaveProductInCategory(listPro, 2));
+
+const isHaveProductInCategoryWithES6 = (listProduct, categoryID) => {
     listProduct.forEach(element => {
-        return element.quality
+        if (element.categoryId === categoryID)
+            return true
+            //console.log(element.categoryId);
+        else 
+            return false
     })
 }
+//console.log(isHaveProductInCategoryWithES6(listPro, 2));
 
-// console.log(totalProductWithES6(listProduct))
+function fiterProductBySaleDate(listProduct) {
+    for (let indexArray = 0; indexArray < listPro.length; indexArray++) {
+        if (listProduct[indexArray].saleDate >= DATE && listProduct[indexArray].quality > 0) {
+            return listProduct[indexProduct]
+        }
+    }
+}
+
+const fiterProductBySaleDateWithES6 = listProduct => {
+    (listProduct.find(listProduct => (listProduct[indexArray].saleDate >= DATE && listProduct[indexArray].quality > 0)))
+}
