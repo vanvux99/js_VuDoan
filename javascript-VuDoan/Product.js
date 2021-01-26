@@ -33,7 +33,7 @@ const random = (length = 8) => {
 }
 const listPro = [
     { id: 1, name: 'kiem', categoryId: 2, saleDate: '20-11-2020', quality: 5, isDelete: false },
-    { id: 2, name: 'aaaa', categoryId: 2, saleDate: '26-01-2021', quality: 1, isDelete: false },
+    { id: 2, name: 'aaaa', categoryId: 2, saleDate: '29-01-2021', quality: 1, isDelete: false },
     { id: 3, name: 'cccc', categoryId: 3, saleDate: '02-12-2020', quality: 1, isDelete: true },
     { id: 4, name: 'number 4', categoryId: 1, saleDate: '28-01-2021', quality: 1, isDelete: true }
 ]
@@ -128,22 +128,20 @@ const fiterProductByQulityWithES6 = listProduct => {
 
 //#endregion
 
-// no return
 //#region fiterProductBySaleDate(listProduct) 
 function fiterProductBySaleDate(listProduct) {
     let listProductBySaleDate = []
 
     for (let indexProduct = 0; indexProduct < listProduct.length; indexProduct++) {
-        if (listProduct[indexProduct].saleDate > DATE) {
+        if (Date.parse(listProduct[indexProduct].saleDate) > Date.parse(DATE)) {
             listProductBySaleDate.push(listProduct[indexProduct])
-                //console.log(listProduct[indexProduct]);
         }
     }
 
     return listProductBySaleDate
 }
-//console.log(fiterProductBySaleDate(listPro));
-// no return
+//console.log("ghịyhkhik", fiterProductBySaleDate(listPro));
+// result object id = 2 and id = 4
 
 //#endregion
 
@@ -179,40 +177,47 @@ function totalProduct(listProduct) {
 
 //#endregion
 
+// review again
 //#region totalProductWithES6(listProduct)
 const totalProductWithES6 = listProduct => {
         return getQuality(listPro).reduce(((sum, number) => sum + number), 0)
     }
     //console.log(totalProductWithES6(listPro));
-    // làm lại nhé
+    // return result 8
 
 //#endregion
 
 //#region isHaveProductInCategory(listProduct, categoryId)
 function isHaveProductInCategory(listProduct, categoryId) {
+    var bool = false
+
     for (let indexCategory = 0; indexCategory < listProduct.length; indexCategory++) {
-        if (listProduct.categoryId === categoryId)
+        if (listProduct[indexCategory].categoryId === categoryId)
             return true
-        else
-            return false
     }
+
+    return bool
 }
-//console.log(isHaveProductInCategory(listPro, 2));
+//console.log(isHaveProductInCategory(listPro, 4));
 // result false
 
 //#endregion
 
+// error
+//#region  isHaveProductInCategoryWithES6(listProduct, categoryID)
 const isHaveProductInCategoryWithES6 = (listProduct, categoryID) => {
+        let bool = false
+
         listProduct.forEach(element => {
             if (element.categoryId === categoryID)
                 return true
-                    //console.log(element.categoryId);
-            else
-                return false
         })
+
+        return bool
     }
     //console.log(isHaveProductInCategoryWithES6(listPro, 2));
-    // làm lại
+    // error
+    //#endregion
 
 //#region fiterProductBySaleDate(listProduct)
 function fiterProductBySaleDate(listProduct) {
